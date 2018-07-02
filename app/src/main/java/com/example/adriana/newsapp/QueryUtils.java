@@ -72,7 +72,7 @@ public class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the newsFeed JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -100,21 +100,21 @@ public class QueryUtils {
     }
 
 
-    public static List<NewsFeed> extractFeatureFromJson(String earthquakeJSON) {
-        if (TextUtils.isEmpty(earthquakeJSON)) {
+    public static List<NewsFeed> extractFeatureFromJson(String newsFeedJSON) {
+        if (TextUtils.isEmpty(newsFeedJSON)) {
             return null;
         }
 
         List<NewsFeed> newsFeeds = new ArrayList<>();
 
         try {
-            JSONObject baseJsonResponse = new JSONObject(earthquakeJSON);
+            JSONObject baseJsonResponse = new JSONObject(newsFeedJSON);
             JSONArray newsFeedArray = baseJsonResponse.getJSONArray("response");
 
             for (int i = 0; i < newsFeedArray.length(); i++) {
-                JSONObject currentEarthquake = newsFeedArray.getJSONObject(i);
+                JSONObject currentNewsFeed  = newsFeedArray.getJSONObject(i);
 
-                JSONObject properties = currentEarthquake.getJSONObject("results");
+                JSONObject properties = currentNewsFeed .getJSONObject("results");
                 String title = properties.getString("webTitle");
                 String section = properties.getString("sectionName");
                 long timeInMilliseconds = properties.getLong("webPublicationDate");
@@ -126,7 +126,7 @@ public class QueryUtils {
 
 
         } catch (JSONException e) {
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the NewsFeed JSON results", e);
         }
 
         return newsFeeds;
