@@ -109,16 +109,16 @@ public class QueryUtils {
 
         try {
             JSONObject baseJsonResponse = new JSONObject(newsFeedJSON);
-            JSONArray newsFeedArray = baseJsonResponse.getJSONArray("response");
+            JSONObject response = baseJsonResponse.getJSONObject("response");
+            Log.d("response", "Value: " + response);
 
+            JSONArray newsFeedArray= response.getJSONArray("results");
             for (int i = 0; i < newsFeedArray.length(); i++) {
                 JSONObject currentNewsFeed  = newsFeedArray.getJSONObject(i);
-
-                JSONObject properties = currentNewsFeed .getJSONObject("results");
-                String title = properties.getString("webTitle");
-                String section = properties.getString("sectionName");
-                long timeInMilliseconds = properties.getLong("webPublicationDate");
-                String url = properties.getString("webUrl");
+                String title = currentNewsFeed.getString("webTitle");
+                String section = currentNewsFeed.getString("sectionName");
+                String timeInMilliseconds = currentNewsFeed.getString("webPublicationDate");
+                String url = currentNewsFeed.getString("webUrl");
 
                 NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url);
                 newsFeeds.add(newsFeed);

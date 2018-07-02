@@ -4,14 +4,14 @@ public class NewsFeed {
 
     private String mTitle;
     private String mSection;
-    private long mTimeInMilliseconds;
+    private String mTimeInMilliseconds;
     private String mUrl;
 
-    public NewsFeed(String title, String section, long timeInMilliseconds, String url) {
-        mTitle = title;
-        mSection = section;
-        mTimeInMilliseconds = timeInMilliseconds;
-        mUrl = url;
+    public NewsFeed(String mTitle, String mSection, String mTimeInMilliseconds, String mUrl) {
+        this.mTitle = mTitle;
+        this.mSection = mSection;
+        this.mTimeInMilliseconds = mTimeInMilliseconds;
+        this.mUrl = mUrl;
     }
 
     public String getTitle() {
@@ -22,7 +22,7 @@ public class NewsFeed {
         return mSection;
     }
 
-    public long getTimeInMilliseconds() {
+    public String getTimeInMilliseconds() {
         return mTimeInMilliseconds;
     }
 

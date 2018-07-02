@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class NewsFeedAdapter extends ArrayAdapter<NewsFeed> {
+
+    private static final String DATE_SEPARATOR = "T";
 
     public NewsFeedAdapter(Context context, List<NewsFeed> newsFeeds) {
         super(context, 0, newsFeeds);
@@ -24,7 +24,6 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsFeed> {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.news_feed_list_item, parent, false);
         }
-
         NewsFeed currentNewsFeed = getItem(position);
 
         TextView titleView = listItemView.findViewById(R.id.title);
@@ -33,28 +32,29 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsFeed> {
         TextView sectionView = listItemView.findViewById(R.id.section_name);
         sectionView.setText(currentNewsFeed.getSection());
 
-        Date dateObject = new Date(currentNewsFeed.getTimeInMilliseconds());
-        TextView dateView = listItemView.findViewById(R.id.date);
-        String formattedDate = formatDate(dateObject);
-        dateView.setText(formattedDate);
+        String originalDate = currentNewsFeed.getTimeInMilliseconds();
+        String date = "";
+        String time = "";
 
-        TextView timeView = listItemView.findViewById(R.id.time);
-        String formattedTime = formatTime(dateObject);
-        timeView.setText(formattedTime);
+        if (originalDate.contains(DATE_SEPARATOR)) {
+            String[] parts = originalDate.split(DATE_SEPARATOR);
+            date = parts[0];
+            time = parts[1];
+        }
+
+        TextView dateLocationView = listItemView.findViewById(R.id.date);
+        dateLocationView.setText(currentNewsFeed.getTimeInMilliseconds());
+        dateLocationView.setText(date);
+
+        TextView timeOffsetView = listItemView.findViewById(R.id.time);
+        String timeRemovedLastLetter = removeLastChar(time);
+        timeOffsetView.setText(timeRemovedLastLetter);
 
         return listItemView;
     }
 
-
-    private String formatDate(Date dateObject) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
-        return dateFormat.format(dateObject);
-    }
-
-
-    private String formatTime(Date dateObject) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-        return timeFormat.format(dateObject);
-    }
+    private static String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+           }
 
 }
