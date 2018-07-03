@@ -25,7 +25,6 @@ public class QueryUtils {
     }
 
     public static List<NewsFeed> fetchNewsFeedData(String requestUrl) {
-
         URL url = createUrl(requestUrl);
 
         String jsonResponse = null;
@@ -36,6 +35,7 @@ public class QueryUtils {
         }
 
         List<NewsFeed> newsFeeds = extractFeatureFromJson(jsonResponse);
+
         return newsFeeds;
     }
 
@@ -64,6 +64,7 @@ public class QueryUtils {
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
+
 
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
@@ -106,24 +107,46 @@ public class QueryUtils {
         }
 
         List<NewsFeed> newsFeeds = new ArrayList<>();
-
         try {
             JSONObject baseJsonResponse = new JSONObject(newsFeedJSON);
             JSONObject response = baseJsonResponse.getJSONObject("response");
             Log.d("response", "Value: " + response);
 
-            JSONArray newsFeedArray= response.getJSONArray("results");
+            JSONArray newsFeedArray = response.getJSONArray("results");
+
             for (int i = 0; i < newsFeedArray.length(); i++) {
-                JSONObject currentNewsFeed  = newsFeedArray.getJSONObject(i);
+                JSONObject currentNewsFeed = newsFeedArray.getJSONObject(i);
+
+                JSONArray tagsArray = currentNewsFeed.getJSONArray("tags");
+                String author = "";
+                if (tagsArray.length() != 0) {
+                    JSONObject tagsObject = tagsArray.getJSONObject(0);
+                    if (tagsObject.has("webTitle")) {
+                        author = tagsObject.getString("webTitle");
+                        Log.d("tagsObject", "Value: " + author);
+                    }
+                }
+
                 String title = currentNewsFeed.getString("webTitle");
+                Log.d("webTitle", "Value: " + title);
+
                 String section = currentNewsFeed.getString("sectionName");
+                Log.d("sectionName", "Value: " + section);
+
                 String timeInMilliseconds = currentNewsFeed.getString("webPublicationDate");
+                Log.d("webPublicationDate", "Value: " + timeInMilliseconds);
+
                 String url = currentNewsFeed.getString("webUrl");
+                Log.d("webUrl", "Value: " + url);
 
-                NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url);
-                newsFeeds.add(newsFeed);
+                if (!author.isEmpty()) {
+                    NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url, author);
+                    newsFeeds.add(newsFeed);
+                }else{
+                    NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url, "");
+                    newsFeeds.add(newsFeed);
+                }
             }
-
 
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the NewsFeed JSON results", e);
@@ -131,4 +154,6 @@ public class QueryUtils {
 
         return newsFeeds;
     }
+
 }
+

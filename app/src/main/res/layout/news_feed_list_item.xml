@@ -37,6 +37,15 @@
             android:textSize="@dimen/small_text_size"
             tools:text="ABC section" />
 
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/small_text_size"
+            tools:text="@string/article_author" />
+
     </LinearLayout>
 
     <LinearLayout

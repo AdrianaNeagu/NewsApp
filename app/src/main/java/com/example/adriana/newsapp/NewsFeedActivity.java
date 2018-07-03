@@ -79,6 +79,7 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
         if (newsFeeds != null && !newsFeeds.isEmpty()) {
             mAdapter.addAll(newsFeeds);
         }
+
     }
 
     @Override
