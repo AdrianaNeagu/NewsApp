@@ -21,7 +21,8 @@ import java.util.List;
 
 public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsFeed>> {
     private static final String LOG_TAG = NewsFeedActivity.class.getName();
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?q=debate&tag=politics/politics&from-date=2014-01-01&api-key=test";
+    private static final String GUARDIAN_REQUEST_URL =
+            "https://content.guardianapis.com/search?q=debate&tag=politics/politics&from-date=2017-01-01&api-key=43570cba-f440-4ed4-8a17-8181bffaf7b1";
     private NewsFeedAdapter mAdapter;
     private static final int NEWSFEED_LOADER_ID = 1;
     private TextView mEmptyStateTextView;
@@ -74,10 +75,11 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
         View loadingIndicator = findViewById(R.id.loading_spinner);
         loadingIndicator.setVisibility(View.GONE);
 
-        mEmptyStateTextView.setText(R.string.no_news);
-        mAdapter.clear();
         if (newsFeeds != null && !newsFeeds.isEmpty()) {
             mAdapter.addAll(newsFeeds);
+        } else {
+            mEmptyStateTextView.setText(R.string.no_news_available);
+            mAdapter.clear();
         }
 
     }

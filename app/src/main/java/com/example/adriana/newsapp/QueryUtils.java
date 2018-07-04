@@ -117,16 +117,6 @@ public class QueryUtils {
             for (int i = 0; i < newsFeedArray.length(); i++) {
                 JSONObject currentNewsFeed = newsFeedArray.getJSONObject(i);
 
-                JSONArray tagsArray = currentNewsFeed.getJSONArray("tags");
-                String author = "";
-                if (tagsArray.length() != 0) {
-                    JSONObject tagsObject = tagsArray.getJSONObject(0);
-                    if (tagsObject.has("webTitle")) {
-                        author = tagsObject.getString("webTitle");
-                        Log.d("tagsObject", "Value: " + author);
-                    }
-                }
-
                 String title = currentNewsFeed.getString("webTitle");
                 Log.d("webTitle", "Value: " + title);
 
@@ -139,11 +129,11 @@ public class QueryUtils {
                 String url = currentNewsFeed.getString("webUrl");
                 Log.d("webUrl", "Value: " + url);
 
-                if (!author.isEmpty()) {
-                    NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url, author);
+                if (!title.isEmpty()) {
+                    NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url);
                     newsFeeds.add(newsFeed);
                 }else{
-                    NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url, "");
+                    NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url);
                     newsFeeds.add(newsFeed);
                 }
             }

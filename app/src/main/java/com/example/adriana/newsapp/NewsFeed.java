@@ -5,14 +5,12 @@ public class NewsFeed {
     private String mSection;
     private String mTimeInMilliseconds;
     private String mUrl;
-    private String mAuthor;
 
-    public NewsFeed(String title, String section, String timeInMilliseconds, String url, String author) {
+    public NewsFeed(String title, String section, String timeInMilliseconds, String url) {
         mTitle = title;
         mSection = section;
         mTimeInMilliseconds = timeInMilliseconds;
         mUrl = url;
-        mAuthor = author;
     }
 
     public String getTitle() {
@@ -31,8 +29,5 @@ public class NewsFeed {
         return mUrl;
     }
 
-    public String getAuthor() {
-        return mAuthor;
-    }
 }
 

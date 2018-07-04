@@ -32,8 +32,6 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsFeed> {
         TextView sectionView = listItemView.findViewById(R.id.section_name);
         sectionView.setText(currentNewsFeed.getSection());
 
-        TextView authorView = (TextView) listItemView.findViewById(R.id.author_name);
-        authorView.setText(currentNewsFeed.getAuthor());
 
         String originalDate = currentNewsFeed.getTimeInMilliseconds();
         String date = "";
