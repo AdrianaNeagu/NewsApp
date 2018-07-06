@@ -22,7 +22,7 @@ import java.util.List;
 public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsFeed>> {
     private static final String LOG_TAG = NewsFeedActivity.class.getName();
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?q=debate&tag=politics/politics&from-date=2017-01-01&api-key=43570cba-f440-4ed4-8a17-8181bffaf7b1";
+            "http://content.guardianapis.com/search?q=debates&section=politics&show-tags=contributor&api-key=43570cba-f440-4ed4-8a17-8181bffaf7b1";
     private NewsFeedAdapter mAdapter;
     private static final int NEWSFEED_LOADER_ID = 1;
     private TextView mEmptyStateTextView;
