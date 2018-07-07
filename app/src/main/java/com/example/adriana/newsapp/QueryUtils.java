@@ -142,13 +142,9 @@ public class QueryUtils {
 
                 if (!author.isEmpty()) {
                     NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url, author);
-
-                    //add new object to the list
                     newsFeeds.add(newsFeed);
                 }else{
                     NewsFeed newsFeed = new NewsFeed(title, section, timeInMilliseconds, url, "");
-
-                    //add new object to the list
                     newsFeeds.add(newsFeed);
                 }
             }
